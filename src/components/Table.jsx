@@ -20,8 +20,7 @@ const Table = ({ sat }) => {
      </tr>
      </thead>
      <tbody>
-
-      {sat.map((data, id) => {
+      {sat.map((data, id) => { // Mapping each satellite object to a row in the table
         return (
         <tr key={id}>
           <td>{data.name}</td>
