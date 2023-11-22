@@ -1,39 +1,60 @@
-import React, { useState } from 'react';
-import Banner from './components/Banner';
-import Buttons from './components/Buttons';
-import Table from './components/Table';
-import satData from './components/satData';
+
+import Buttons from "./components/Buttons";
+import Table from "./components/Table";
+import React, { useState } from "react";
+import satData from "./components/satData";
+import Banner from "./components/Banner";
 
 function App() {
-  // Declare Variables
-  const [satellites, setSatellites] = useState([]);
+  const [sat, setSat] = useState(satData);
   const displaySats = [...new Set(satData.map((data) => data.orbitType))];
-
-  // Function to get unique values of the orbitType property
-  const getUniqueOrbitTypes = () => {
-    return [...new Set(satellites.map(data => data.orbitType))];
-  }
-
-  // Function to filter satellites by orbit type
-  const filterSatelliteByOrbit = (orbitType) => {
-    const newSatelliteData = satellites.filter(satellite => satellite.orbitType === orbitType);
-    setSatellites(newSatelliteData);
+  const filterByType = (currentType) => {
+    const filteredSats = satData.filter((newSatDisplay) => {
+      return newSatDisplay.orbitType === currentType;
+    });
+    setSat(filteredSats);
   };
 
   return (
-    <div>
+    <>
       <Banner />
-      <div>
-        {displaySats.map(orbitType => (
-          <button key={orbitType} onClick={() => filterSatelliteByOrbit(orbitType)}>
-            {orbitType}
-          </button>
-        ))}
-      </div>
-      <Buttons orbitTypes={getUniqueOrbitTypes()} filterSatellites={filterSatelliteByOrbit} />
-      <Table satellites={satellites} />
-    </div>
+      <Buttons
+        filterByType={filterByType}
+        setSat={setSat}
+        displaySats={displaySats}
+      />
+      <Table sat={sat} />
+    </>
   );
 }
-
 export default App;
+ // import React, { useState } from 'react';
+// import Buttons from './components/Buttons';
+// import Table from './components/Table';
+// import satData from './components/satData';
+// import Banner from "./components/Banner";
+
+// function App() {
+//   const [sat, setSat] = useState(satData);
+//   const displaySats = [...new Set(satData.map((data) => data.orbitType))];
+//   const filterByType = (currentType) => {
+//     const filteredSats = satData.filter((newSatDisplay) => {
+//       return newSatDisplay.orbitType === currentType;
+//     });
+//     setSat(filteredSats);
+//   };
+//   return (
+//     <div>
+//       <Banner />
+//       <Buttons
+//         filterByType={filterByType}
+//         setSat={setSat}
+//         displaySats={displaySats}
+//       />
+//       <Table sat={sat} />
+//       <button onClick={showAllSatellites}>All Orbits</button>
+//     </div>
+//   );
+// }
+
+// export default App;
